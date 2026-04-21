@@ -23,6 +23,7 @@ setup(
             'waypoint_navigator = limo_waypoints.waypoint_navigator:main',
             'pickplace_navigator = limo_waypoints.pickplace_navigator:main',
             # hier können später weitere nodes gespeichert werden...
+            # Test
         ],
     },
 )
