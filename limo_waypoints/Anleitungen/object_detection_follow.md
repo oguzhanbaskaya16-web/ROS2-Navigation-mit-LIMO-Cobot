@@ -50,11 +50,24 @@ python3 yolo_limo_view.py
 
 ---
 
+## 🤖 4. Baustein Publisher starten
+
+```bash
+source ~/agilex_ws/devel/setup.bash
+python3 ~/yolo_baustein_publisher.py
+```
+
+[Link](https://github.com/oguzhanbaskaya16-web/ROS2-Navigation-mit-LIMO-Cobot/blob/main/limo_waypoints/limo_object_detection/yolo_baustein_publisher.py) zum Skript
+
+---
+
+---
+
 ## 🤖 4. Baustein Follow starten
 
 ```bash
 source ~/agilex_ws/devel/setup.bash
-python3 yolo_baustein_follow.py
+python3 ~/yolo_baustein_follow.py
 ```
 
 [Link](https://github.com/oguzhanbaskaya16-web/ROS2-Navigation-mit-LIMO-Cobot/blob/main/limo_waypoints/limo_object_detection/yolo_baustein_follow.py) zum Skript
