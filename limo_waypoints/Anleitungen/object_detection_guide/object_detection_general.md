@@ -483,6 +483,49 @@ predict3/
 
 
 
+## 🤖 YOLO Modelle
+
+Für das Training der Objekterkennung können verschiedene YOLO-Modelle verwendet werden. Diese unterscheiden sich hauptsächlich in **Geschwindigkeit** und **Genauigkeit**.
+
+### 📊 Modellübersicht
+
+| Modell       | Beschreibung                                              |
+| ------------ | --------------------------------------------------------- |
+| `yolov8n.pt` | Sehr schnell, aber geringere Genauigkeit                  |
+| `yolov8s.pt` | Guter Kompromiss zwischen Geschwindigkeit und Genauigkeit |
+| `yolov8m.pt` | Höhere Genauigkeit, aber langsamer                        |
+| `yolov8l.pt` | Sehr genau, benötigt viel Rechenleistung                  |
+| `yolov8x.pt` | Maximale Genauigkeit, sehr hohe Rechenanforderungen       |
+
+---
+
+### ⚖️ Auswahl des Modells
+
+Die Wahl des Modells hängt vom Anwendungsfall ab:
+
+* Für **schnelle Ausführung auf dem Roboter (LIMO)** → `yolov8n.pt`
+* Für **gute Balance im Training** → `yolov8s.pt`
+* Für **maximale Genauigkeit (z. B. Auswertung)** → `yolov8m` oder größer
+
+---
+
+### 💡 Hinweis
+
+Größere Modelle liefern in der Regel bessere Ergebnisse, benötigen jedoch mehr **Rechenleistung** und **Trainingszeit**.
+
+---
+
+### 🧠 Fazit
+
+Für die meisten Anwendungen empfiehlt sich `yolov8s.pt`, da es eine gute Balance zwischen **Leistung** und **Effizienz** bietet.
+
+---
+
+
+
+
+
+
 
 
 
