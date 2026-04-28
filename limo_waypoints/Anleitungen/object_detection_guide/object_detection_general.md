@@ -521,6 +521,118 @@ Für die meisten Anwendungen empfiehlt sich `yolov8s.pt`, da es eine gute Balanc
 
 ---
 
+### Effizientere Trainingszeit
+
+Für eine effiziente Trainingszeit wird eine NVIDIA-Grafikkarte mit CUDA-Unterstützung verwendet. Durch die Nutzung der GPU kann die Trainingsdauer im Vergleich zur CPU erheblich reduziert werden.
+
+Hier ist ein sauberer Markdown-Abschnitt für deine Doku 👇
+
+---
+
+## ⚡ Umstellung von CPU auf GPU (YOLO Training)
+
+Für eine deutlich schnellere Trainingszeit wurde das Training von der **CPU** auf die **GPU (NVIDIA CUDA)** umgestellt.
+
+---
+
+### 🔍 1. GPU überprüfen
+
+Zuerst wurde geprüft, ob eine kompatible NVIDIA-Grafikkarte vorhanden ist:
+
+```bash
+nvidia-smi
+```
+
+👉 Ergebnis:
+Die GPU wurde erfolgreich erkannt (z. B. *NVIDIA RTX 2000 Ada*).
+
+---
+
+### ⚠️ 2. Ausgangszustand
+
+Das Training lief zunächst nur über die CPU:
+
+```text
+torch-2.x.x+cpu
+GPU_mem 0G
+```
+
+👉 Nachteil: Sehr lange Trainingszeiten
+
+---
+
+### 🔧 3. CPU-Version von PyTorch entfernen
+
+```bash
+python -m pip uninstall torch torchvision torchaudio -y
+```
+
+---
+
+### 🔧 4. GPU-Version von PyTorch installieren
+
+```bash
+python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
+
+👉 Diese Version unterstützt **CUDA (GPU-Beschleunigung)**
+
+---
+
+### 🔍 5. GPU-Nutzung überprüfen
+
+```bash
+python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
+```
+
+👉 Ergebnis:
+
+```text
+True
+NVIDIA RTX 2000 Ada Generation Laptop GPU
+```
+
+---
+
+### 🚀 6. Training mit GPU starten
+
+```bash
+& "d:\users\bku\benutzer\appdata(roaming)\python\python38\Scripts\yolo.exe" detect train data=dataset.yaml model=yolov8s.pt epochs=100 imgsz=640 device=0
+```
+
+👉 `device=0` erzwingt die Nutzung der GPU
+
+---
+
+### 📊 7. GPU-Nutzung erkennen
+
+Während des Trainings:
+
+```text
+GPU_mem 2G
+```
+
+👉 bedeutet: GPU wird aktiv genutzt
+❌ `GPU_mem 0G` → CPU wird verwendet
+
+---
+
+### ⚡ Vorteile der GPU-Nutzung
+
+* Deutlich schnellere Trainingszeit
+* Effizientere Verarbeitung großer Datensätze
+* Bessere Nutzung moderner Hardware
+
+---
+
+### 🧠 Fazit
+
+Durch die Umstellung auf GPU konnte die Trainingsdauer erheblich reduziert werden. Voraussetzung ist eine kompatible **NVIDIA-Grafikkarte mit CUDA-Unterstützung** sowie eine passende PyTorch-Version.
+
+---
+
+
+
 
 
 
