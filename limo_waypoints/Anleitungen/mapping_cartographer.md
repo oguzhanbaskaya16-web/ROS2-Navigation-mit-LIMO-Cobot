@@ -82,3 +82,4 @@ Datei öffnen:
 👉 Dort Map-Pfad anpassen:
 
 map: /home/agilex/agilex_ws/src/limo_ros/limo_bringup/maps/labor_map.yaml
+
