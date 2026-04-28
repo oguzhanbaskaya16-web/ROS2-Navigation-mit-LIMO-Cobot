@@ -103,7 +103,7 @@ pip install labelImg
 👉 Programm starten (Beispiel Windows):
 
 ```bash id="8n3u4c"
-"C:\Users\<BENUTZERNAME>\AppData\Roaming\Python\Python38\Scripts\labelImg.exe"
+""d:\users\bku\benutzer\appdata(roaming)\python\python38\Scripts\labelImg.exe""
 ```
 
 ---
@@ -342,7 +342,7 @@ cd "C:/Users/Username/Pictures/ObjectDetection/objekt_dataset"
 ## 12. YOLO Training starten
 
 ```bash
-yolo detect train data=dataset.yaml model=yolov8n.pt epochs=50 imgsz=640
+& "d:\users\bku\bentuzer\appdata(roaming)\python\python38\Scripts\yolo.exe" detect train data=dataset.yaml model=yolov8s.pt epochs=100 imgsz=640
 ```
 
 ---
