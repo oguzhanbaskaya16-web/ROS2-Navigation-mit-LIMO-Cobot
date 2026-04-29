@@ -12,9 +12,13 @@ MOVE_SPEED = 25
 GRIPPER_SPEED = 50
 
 HOME_ANGLES = [0, -20, 20, 0, 0, 0]
-PRE_GRASP_ANGLES = [0, -35, 45, 0, 0, 0]
-GRASP_ANGLES = [0, -45, 55, 0, 0, 0]
-LIFT_ANGLES = [0, -20, 35, 0, 0, 0]
+
+# Greifposition links unten.
+# Wenn der Arm zu weit links greift: ersten Wert naeher an 0 setzen.
+# Wenn der Arm zu hoch greift: zweiten Wert negativer und dritten Wert groesser setzen.
+PRE_GRASP_ANGLES = [-35, -35, 45, 0, 0, 0]
+GRASP_ANGLES = [-35, -52, 62, 0, 0, 0]
+LIFT_ANGLES = [-35, -20, 35, 0, 0, 0]
 
 
 class MyCobotGripperNode:

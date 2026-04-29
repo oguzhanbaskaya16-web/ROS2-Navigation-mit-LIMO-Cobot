@@ -7,6 +7,7 @@ from rclpy.node import Node
 from action_msgs.msg import GoalStatus
 from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped
 from nav2_msgs.action import NavigateToPose
+from std_msgs.msg import Bool
 
 
 FORWARD_DISTANCE_M = 1.0
@@ -18,6 +19,7 @@ class SimpleNavigator(Node):
 
         self.client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
         self.start_pose = None
+        self.grasp_pub = self.create_publisher(Bool, '/greif_start', 10)
 
         self.pose_sub = self.create_subscription(
             PoseWithCovarianceStamped,
@@ -30,6 +32,8 @@ class SimpleNavigator(Node):
         self.goals = [
             ('forward', FORWARD_DISTANCE_M)
         ]
+
+        self.grasp_after_navigation = True
 
     def amcl_callback(self, msg):
         if self.start_pose is None:
@@ -122,6 +126,22 @@ class SimpleNavigator(Node):
 
                 if not success:
                     return
+
+        if self.grasp_after_navigation:
+            self.trigger_gripper()
+
+    def trigger_gripper(self):
+        self.get_logger().info('Navigation beendet. Sende Greifsignal auf /greif_start ...')
+
+        msg = Bool()
+        msg.data = True
+
+        # Mehrfach senden, damit der Greifer-Node das Signal sicher bekommt.
+        for _ in range(5):
+            self.grasp_pub.publish(msg)
+            rclpy.spin_once(self, timeout_sec=0.1)
+
+        self.get_logger().info('Greifsignal gesendet.')
 
 
 def main(args=None):
