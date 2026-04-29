@@ -21,7 +21,7 @@ ros2 launch limo_bringup cartographer.launch.py
 ## 3. RViz starten (Visualisierung)
 
 - Terminal 3 (foxy) auf dem LIMO:
-
+                            
 ```bash
 rviz2
 ```
