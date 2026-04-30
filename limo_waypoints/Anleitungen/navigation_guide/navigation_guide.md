@@ -6,6 +6,8 @@
 ros2 launch limo_bringup limo_start.launch.py pub_odom_tf:=true
 ```
 
+Konsolenausgabe: [limo_bringup-limo_startpy.txt](../Konsolenausgabe_Screenshots/limo_bringup-limo_startpy.txt)
+
 ## 2. Navigation starten (Nav2)
 
 - Terminal 2 (foxy) auf dem LIMO:

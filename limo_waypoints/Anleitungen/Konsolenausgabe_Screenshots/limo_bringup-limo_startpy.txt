@@ -1,0 +1,42 @@
+[INFO] [launch]: All log files can be found below /home/agilex/.ros/log/2026-04-30-15-33-02-220181-limo3c6d66c3bb17-8680
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [limo_base-1]: process started with pid [8693]
+[INFO] [ydlidar_ros2_driver_node-2]: process started with pid [8695]
+[INFO] [static_transform_publisher-3]: process started with pid [8697]
+[INFO] [static_transform_publisher-4]: process started with pid [8699]
+[INFO] [static_transform_publisher-5]: process started with pid [8701]
+[limo_base-1] Loading parameters: 
+[limo_base-1] - port name: ttyTHS0
+[limo_base-1] - odom frame name: odom
+[limo_base-1] - base frame name: base_link
+[limo_base-1] - odom topic name: 1
+[limo_base-1] - use_mcnamu_: 0
+[limo_base-1] [0m[INFO] [1777534382.554466226] [limo_base]: connet the serial port:'/dev/ttyTHS0'[0m
+[limo_base-1] [0m[INFO] [1777534382.558052822] [limo_base]: enableCommandedMode :[0m
+[limo_base-1] [0m[INFO] [1777534382.558141583] [limo_base]: Open the serial port:'/dev/ttyTHS0'[0m
+[static_transform_publisher-4] [INFO] [1777534382.558978455] [base_link_to_base_laser_ydlidar]: Spinning until killed publishing transform from 'base_link' to 'camera_link'
+[static_transform_publisher-3] [INFO] [1777534382.560614109] [base_link_to_base_laser_ydlidar]: Spinning until killed publishing transform from 'base_link' to 'laser_link'
+[ydlidar_ros2_driver_node-2] [0m[INFO] [1777534382.568106365] [ydlidar_ros2_driver_node]: [YDLIDAR INFO] Current ROS Driver Version: 1.0.1
+[ydlidar_ros2_driver_node-2] [0m
+[static_transform_publisher-5] [INFO] [1777534382.568355330] [base_link_to_base_laser_ydlidar]: Spinning until killed publishing transform from 'base_link' to 'imu_link'
+[ydlidar_ros2_driver_node-2] [YDLIDAR] SDK initializing
+[ydlidar_ros2_driver_node-2] [YDLIDAR] SDK has been initialized
+[ydlidar_ros2_driver_node-2] [YDLIDAR] SDK Version: 1.1.19
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Lidar successfully connected [/dev/ttyUSB0:230400]
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Lidar running correctly! The health status: good
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Baseplate device info
+[ydlidar_ros2_driver_node-2] Firmware version: 1.2
+[ydlidar_ros2_driver_node-2] Hardware version: 1
+[ydlidar_ros2_driver_node-2] Model: unkown(YD-151)
+[ydlidar_ros2_driver_node-2] Serial: 2025101500090157
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Current scan frequency: 10.00Hz
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Lidar init success, Elapsed time 1038 ms
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Start to getting intensity flag
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Auto set intensity 1
+[ydlidar_ros2_driver_node-2] [YDLIDAR] End to getting intensity flag
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Create thread 0x7B69A9A0
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Successed to start scan mode, Elapsed time 2568 ms
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Fixed Size: 404
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Sample Rate: 4.00K
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Successed to check the lidar, Elapsed time 0 ms
+[ydlidar_ros2_driver_node-2] [YDLIDAR] Now lidar is scanning...
