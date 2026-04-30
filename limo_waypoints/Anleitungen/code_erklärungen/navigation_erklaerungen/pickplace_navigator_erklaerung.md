@@ -365,6 +365,7 @@ Hier könnte später zum Beispiel Code stehen, der einen Greifer öffnet, schlie
 - Nav2 muss laufen, sonst findet `wait_for_server()` keinen Action-Server.
 - Die Lokalisierung muss funktionieren, sonst kommt keine sinnvolle Position über `/amcl_pose`.
 - In RViz sollte vorher die Startposition mit `2D Pose Estimate` gesetzt werden.
+- Screenshot: [2dposeestimate.png](../../Konsolenausgabe_Screenshots/2dposeestimate.png)
 - Die Koordinaten beziehen sich auf die Karte, also auf das Koordinatensystem `map`.
 - Der Roboter fährt nur zurück, wenn die Hinfahrt erfolgreich war.
 - Die Pick/Place-Aktion ist aktuell nur eine Simulation und bewegt noch keinen Greifer.

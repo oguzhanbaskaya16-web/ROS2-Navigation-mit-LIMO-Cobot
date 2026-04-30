@@ -154,11 +154,15 @@ Konsolenausgabe: [limo_bringup-limo_startpy.txt](../Konsolenausgabe_Screenshots/
 ros2 launch limo_bringup limo_nav2.launch.py
 ```
 
+Konsolenausgabe: [limo_bringup-limo_nav2launchpy.txt](../Konsolenausgabe_Screenshots/limo_bringup-limo_nav2launchpy.txt)
+
 ## 13. Ungefähre Position in RViz2 setzen (Pose Estimate)
 
 - In RViz auf **"2D Pose Estimate"** klicken  
 - Auf die ungefähre Position des Roboters in der Map klicken  
 - Richtung durch Ziehen der Maus festlegen  
+
+Screenshot: [2dposeestimate.png](../Konsolenausgabe_Screenshots/2dposeestimate.png)
 
 👉 Ergebnis:
 - Die Lokalisierung (AMCL) wird initialisiert  

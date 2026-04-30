@@ -239,6 +239,7 @@ Hier fährt der Roboter zuerst zu Punkt 1, danach zu Punkt 2 und danach zu Punkt
 
 - Vor dem Start muss Nav2 laufen, sonst findet `wait_for_server()` keinen Action-Server.
 - Die Startposition des Roboters sollte in RViz mit `2D Pose Estimate` gesetzt sein.
+- Screenshot: [2dposeestimate.png](../../Konsolenausgabe_Screenshots/2dposeestimate.png)
 - Die Koordinaten beziehen sich auf die geladene Karte, also auf das Koordinatensystem `map`.
 - `yaw = 0.0` bedeutet meistens: Der Roboter schaut in Richtung der positiven x-Achse der Karte.
 - Der nächste Wegpunkt wird erst gesendet, wenn der vorherige Wegpunkt abgeschlossen ist.

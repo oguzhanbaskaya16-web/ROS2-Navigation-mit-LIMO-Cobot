@@ -16,6 +16,8 @@ Konsolenausgabe: [limo_bringup-limo_startpy.txt](../Konsolenausgabe_Screenshots/
 ros2 launch limo_bringup limo_nav2.launch.py
 ```
 
+Konsolenausgabe: [limo_bringup-limo_nav2launchpy.txt](../Konsolenausgabe_Screenshots/limo_bringup-limo_nav2launchpy.txt)
+
 👉  Nach dem Start:
 
 - RViz2 öffnet sich automatisch
@@ -26,6 +28,8 @@ ros2 launch limo_bringup limo_nav2.launch.py
 - In RViz auf **"2D Pose Estimate"** klicken  
 - Auf die ungefähre Position des Roboters in der Map klicken  
 - Richtung durch Ziehen der Maus festlegen  
+
+Screenshot: [2dposeestimate.png](../Konsolenausgabe_Screenshots/2dposeestimate.png)
 
 👉 Wichtig:
 - Position möglichst genau setzen  
@@ -50,9 +54,13 @@ ros2 launch limo_bringup limo_nav2.launch.py
 - Zielposition auf der Map auswählen  
 - Richtung durch Ziehen der Maus festlegen  
 
+Screenshot: [2dnavgoal.png](../Konsolenausgabe_Screenshots/2dnavgoal.png)
+
 👉 Ergebnis:
 - Eine geplante Route wird angezeigt (**lila Linie**)  
 - Der Roboter fährt automatisch zum Ziel  
+
+Screenshot lila Pfad: [pfadlila.png](../Konsolenausgabe_Screenshots/pfadlila.png)
 
 👉 Bedeutung der Farben:
 - **Lila Linie** = geplanter Pfad (Global Path)  
