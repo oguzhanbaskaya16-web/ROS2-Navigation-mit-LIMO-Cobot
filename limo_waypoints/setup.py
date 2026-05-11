@@ -24,8 +24,8 @@ setup(
             'pickplace_navigator = limo_navigation.pickplace_navigator:main',
             'drive_2m_simple = limo_navigation.drive_2m_simple:main',
             'drive_2m_pick = limo_navigation.drive_2m_pick:main',
+            'auto_pick_orchestrator = limo_navigation.auto_pick_orchestrator:main',
             # hier koennen spaeter weitere nodes gespeichert werden...
-            # Test
         ],
     },
 )
