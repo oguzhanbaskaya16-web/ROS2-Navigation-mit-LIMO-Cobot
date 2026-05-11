@@ -1,207 +1,120 @@
-# To-do: LIMO fährt zum Baustein, greift ihn und bringt ihn zum Zielpunkt
+# TODO: Nav2-Start- und Zielpose kalibrieren
 
-## Ziel
+## Aktueller Stand
 
-Der Roboter soll immer von derselben Startposition aus starten, zu einem festen Baustein-Punkt fahren, den Baustein mit dem MyCobot greifen, zu einem festen Ablagepunkt fahren und den Baustein dort ablegen.
+- Der Roboter faehrt mit direktem `/cmd_vel` geradeaus.
+- Hardware, Motoren und Reifen sind deshalb wahrscheinlich nicht das Hauptproblem.
+- Das Abweichen passiert eher bei Nav2, also durch Startpose, Zielpose, Map, Costmap oder Zielausrichtung.
 
-```text
-Startposition
-    ↓
-zum Pick-Punkt fahren
-    ↓
-Baustein greifen
-    ↓
-zum Place-Punkt fahren
-    ↓
-Baustein ablegen
-```
+Geprueft wurde bereits:
 
-## 1. Grundentscheidung
+- `/scan` laeuft sauber mit ca. 10 Hz.
+- `base_link -> laser_link` funktioniert.
+- `odom -> base_link` funktioniert.
+- `/map` hat einen Publisher.
+- `map -> odom` funktioniert.
+- `map -> base_link` funktioniert.
+- AMCL ist `active [3]`.
+- `/amcl_pose` hat einen Publisher, liefert aber bei `ros2 topic hz /amcl_pose` keine laufenden Daten.
+- Die Lokalisierung kann trotzdem ueber TF genutzt werden.
 
-- [ ] Prüfen, ob der Roboter wirklich immer von derselben Position startet.
-- [ ] Prüfen, ob der Baustein wirklich immer an derselben Position liegt.
-- [ ] Prüfen, ob der Ablagepunkt immer gleich ist.
-- [ ] Wenn alle drei Punkte fest sind: YOLO-Erkennung nicht verwenden.
-- [ ] Wenn der Baustein später variabel liegt: YOLO-/Depth-Erkennung wieder einplanen.
-
-## 2. Navigation vorbereiten
-
-- [ ] Karte der Umgebung erstellen oder vorhandene Karte verwenden.
-- [ ] Lokalisierung mit AMCL starten.
-- [ ] Nav2 starten.
-- [ ] Prüfen, ob der Roboter sich in der Karte korrekt lokalisiert.
-- [ ] Prüfen, ob `/amcl_pose` gültige Positionsdaten liefert.
-- [ ] Prüfen, ob der Roboter mit Nav2 zu einem Zielpunkt fahren kann.
-
-## 3. Pick- und Place-Punkte festlegen
-
-- [ ] Pick-Punkt bestimmen: Dort soll der Roboter vor dem Baustein stehen.
-- [ ] Place-Punkt bestimmen: Dort soll der Roboter den Baustein ablegen.
-- [ ] Für beide Punkte die Koordinaten notieren:
+Zuletzt gemessene Startpose:
 
 ```text
-Pick:
-x =
-y =
-yaw =
-
-Place:
-x =
-y =
-yaw =
+x = 0.471
+y = 0.117
+orientation z = -0.030
+orientation w = 1.000
 ```
 
-- [ ] Pick-Punkt in der Karte testen.
-- [ ] Place-Punkt in der Karte testen.
-- [ ] Prüfen, ob der Roboter an beiden Punkten passend ausgerichtet steht.
+## Naechster Schritt
 
-## 4. MyCobot vorbereiten
+Nicht mehr raten, wo "geradeaus" in der Karte ist. Stattdessen eine echte Geradeausfahrt messen und daraus Start- und Endpose ableiten.
 
-- [ ] Richtigen MyCobot-Port mit `test_port.py` prüfen.
-- [ ] Funktionierenden Port notieren, zum Beispiel `/dev/ttyACM0`.
-- [ ] Greifer mit `test_gripper.py` testen.
-- [ ] Armbewegung mit `move_arm.py` testen.
-- [ ] Manuelle Steuerung mit `keyboard_control.py` verwenden.
-- [ ] Sichere Home-Position finden.
-- [ ] Vor-Greifposition finden.
-- [ ] Greifposition finden.
-- [ ] Hebeposition finden.
-- [ ] Ablageposition finden.
-- [ ] Öffnen-Position beim Ablegen testen.
+### 1. Startpose auslesen
 
-## 5. Armwinkel auslesen
+Roboter an die feste Startposition stellen und dann ausfuehren:
 
-- [ ] Arm mit `keyboard_control.py` in die gewünschte Home-Position fahren.
-- [ ] Winkel mit `get_angles.py` auslesen.
-- [ ] Home-Winkel notieren.
-- [ ] Arm in die Vor-Greifposition fahren.
-- [ ] Winkel auslesen und notieren.
-- [ ] Arm in die Greifposition fahren.
-- [ ] Winkel auslesen und notieren.
-- [ ] Arm in die Hebeposition fahren.
-- [ ] Winkel auslesen und notieren.
-- [ ] Arm in die Ablageposition fahren.
-- [ ] Winkel auslesen und notieren.
+```bash
+ros2 run tf2_ros tf2_echo map base_link
+```
+
+Diese Werte notieren:
 
 ```text
-HOME_ANGLES =
-PRE_GRASP_ANGLES =
-GRASP_ANGLES =
-LIFT_ANGLES =
-PLACE_ANGLES =
-RELEASE_ANGLES =
+START_X =
+START_Y =
+START_Z =
+START_W =
 ```
 
-## 6. Greifer-Node erweitern
+Danach mit `STRG + C` abbrechen.
 
-Aktuelle Grundlage:
+### 2. Roboter geradeaus fahren lassen
+
+```bash
+ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{
+linear: {x: 0.15, y: 0.0, z: 0.0},
+angular: {x: 0.0, y: 0.0, z: 0.0}
+}"
+```
+
+Nach der gewuenschten Strecke mit `STRG + C` stoppen.
+
+### 3. Endpose auslesen
+
+```bash
+ros2 run tf2_ros tf2_echo map base_link
+```
+
+Diese Werte notieren:
 
 ```text
-limo_waypoints/limo_mycobot/mycobot_gripper_node.py
+END_X =
+END_Y =
+END_Z =
+END_W =
 ```
 
-- [ ] Bestehende Greifsequenz prüfen.
-- [ ] Feste Greifwinkel eintragen.
-- [ ] Neue Ablege-Sequenz ergänzen.
-- [ ] Separates Topic für Greifen einplanen, zum Beispiel `/greif_start`.
-- [ ] Separates Topic für Ablegen einplanen, zum Beispiel `/place_start`.
-- [ ] Optional ein Fertig-Signal einplanen, zum Beispiel `/gripper_done`.
-- [ ] Prüfen, dass während einer Sequenz keine zweite Sequenz gestartet wird.
-- [ ] Greifen ohne Fahrbewegung testen.
-- [ ] Ablegen ohne Fahrbewegung testen.
+Danach mit `STRG + C` abbrechen.
 
-## 7. ROS-Versionen klären
+### 4. Gemessene Werte fuer Nav2 verwenden
 
-Wichtig: Die Navigation nutzt aktuell ROS2, der MyCobot-Greifer-Code nutzt aktuell ROS1.
+Die gemessene Startpose wird als `/initialpose` gesetzt:
 
-- [ ] Prüfen, ob Navigation und Greifer im selben ROS-System laufen sollen.
-- [ ] Wenn alles in ROS2 laufen soll: `mycobot_gripper_node.py` auf ROS2 umbauen.
-- [ ] Wenn ROS1 und ROS2 gemischt bleiben: ROS1-ROS2-Bridge einrichten.
-- [ ] Empfohlene Lösung: Greifer-Node auf ROS2 umbauen, damit Navigation und Greifer direkt zusammenarbeiten.
-
-## 8. Ablaufprogramm erstellen
-
-Grundlage:
-
-```text
-limo_waypoints/limo_navigation/pickplace_navigator.py
+```bash
+ros2 topic pub --once /initialpose geometry_msgs/msg/PoseWithCovarianceStamped "{
+header: {frame_id: 'map'},
+pose: {
+  pose: {
+    position: {x: START_X, y: START_Y, z: 0.0},
+    orientation: {x: 0.0, y: 0.0, z: START_Z, w: START_W}
+  },
+  covariance: [0.25, 0, 0, 0, 0, 0,
+               0, 0.25, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0.0685]
+}
+}"
 ```
 
-Das Ablaufprogramm soll später diese Reihenfolge haben:
+Die gemessene Endpose wird als Nav2-Ziel gesetzt:
 
-```text
-1. Startposition lesen
-2. zum Pick-Punkt fahren
-3. Greifsignal senden
-4. warten, bis Greifen fertig ist
-5. zum Place-Punkt fahren
-6. Ablegesignal senden
-7. warten, bis Ablegen fertig ist
-8. optional zurück zur Startposition fahren
+```bash
+ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "{
+pose: {
+  header: {frame_id: 'map'},
+  pose: {
+    position: {x: END_X, y: END_Y, z: 0.0},
+    orientation: {x: 0.0, y: 0.0, z: END_Z, w: END_W}
+  }
+}
+}" --feedback
 ```
 
-- [ ] `pickplace_navigator.py` auf festen Pick-Punkt erweitern.
-- [ ] Feste Place-Koordinaten ergänzen.
-- [ ] Nach erfolgreicher Fahrt zum Pick-Punkt `/greif_start` senden.
-- [ ] Warten, bis der Greifer fertig ist.
-- [ ] Danach zum Place-Punkt fahren.
-- [ ] Nach erfolgreicher Fahrt zum Place-Punkt `/place_start` senden.
-- [ ] Warten, bis Ablegen fertig ist.
-- [ ] Optional zurück zur Startposition fahren.
+## Ziel des Tests
 
-## 9. Testreihenfolge
-
-- [ ] Nur Navigation zum Pick-Punkt testen.
-- [ ] Nur Navigation zum Place-Punkt testen.
-- [ ] Nur Greifsequenz testen.
-- [ ] Nur Ablegesequenz testen.
-- [ ] Pick-Punkt anfahren und Greifen testen.
-- [ ] Place-Punkt anfahren und Ablegen testen.
-- [ ] Gesamtablauf ohne Baustein testen.
-- [ ] Gesamtablauf mit Baustein testen.
-- [ ] Mehrere Wiederholungen testen.
-
-## 10. Welche Dateien werden wahrscheinlich gebraucht?
-
-| Datei | Verwendung |
-| --- | --- |
-| `limo_navigation/pickplace_navigator.py` | Grundlage für den kompletten Fahr- und Pick-and-Place-Ablauf. |
-| `limo_navigation/waypoint_navigator.py` | Beispiel für Navigation zu einem Ziel. |
-| `limo_mycobot/mycobot_gripper_node.py` | Grundlage für Greifen und Ablegen mit festen Winkeln. |
-| `limo_mycobot/keyboard_control.py` | Manuelles Finden der passenden Armpositionen. |
-| `limo_mycobot/get_angles.py` | Auslesen der passenden Winkel. |
-| `limo_mycobot/test_gripper.py` | Testen des Greifers. |
-| `limo_mycobot/test_port.py` | Finden des richtigen MyCobot-Ports. |
-
-## 11. Welche Dateien werden bei festem Bausteinpunkt wahrscheinlich nicht gebraucht?
-
-| Datei | Warum nicht nötig? |
-| --- | --- |
-| `yolo_baustein_publisher.py` | Bausteinerkennung ist nicht nötig, wenn der Baustein immer gleich liegt. |
-| `yolo_baustein_follow.py` | Der Roboter muss dem Baustein nicht visuell folgen. |
-| `yolo_baustein_follow_depth.py` | Tiefenbasierte Annäherung ist nicht nötig, wenn der Pick-Punkt fest ist. |
-| `baustein_auto_grabber.py` | Flexible Kamera-zu-Arm-Greifberechnung ist nicht nötig, wenn die Greifposition fest ist. |
-
-## 12. Minimaler Zielaufbau
-
-Für die einfache feste Variante reicht am Ende ungefähr:
-
-```text
-Nav2 + AMCL
-    ↓
-pickplace_navigator.py
-    ↓
-mycobot_gripper_node.py
-    ↓
-MyCobot greift und legt ab
-```
-
-## 13. Merksatz
-
-```text
-Wenn Startposition, Bausteinposition und Ablagepunkt fest sind,
-brauchst du keine Objekterkennung.
-
-Du brauchst feste Navigationspunkte
-und feste MyCobot-Winkel für Greifen und Ablegen.
-```
+- Wenn Nav2 danach gerade faehrt, waren die vorherigen Zielwerte oder die manuelle RViz-Eingabe das Problem.
+- Wenn Nav2 trotzdem abweicht, dann als Naechstes den lila Pfad in RViz und die Nav2-Controller-/Costmap-Parameter pruefen.

@@ -5,22 +5,28 @@ PORT = "/dev/ttyACM0"
 BAUD = 115200
 STEP = 5      # Grad pro Tastendruck
 SPEED = 20    # eher langsam und sicher
+GRIPPER_SPEED = 50
+HOME_ANGLES = [0, -20, 20, 0, 0, 0]
 
 def clamp(value, low, high):
     return max(low, min(high, value))
 
 def init_arm(mc):
     print("Initialisiere Arm...")
-    mc.release_all_servos()
-    time.sleep(2)
     mc.power_on()
     time.sleep(2)
     mc.set_fresh_mode(1)
     time.sleep(1)
-    print("Arm bereit.")
 
-    mc.send_angles([0, -20, 20, 0, 0, 0], 20)
-    time.sleep(5)
+    angles = mc.get_angles()
+    if angles:
+        print("Halte aktuelle Armposition:", angles)
+        mc.send_angles(angles, SPEED)
+        time.sleep(1)
+    else:
+        print("Konnte aktuelle Winkel nicht lesen. Arm bleibt eingeschaltet.")
+
+    print("Arm bereit.")
 
 def wait_until_done(mc, timeout=10):
     for _ in range(timeout * 10):
@@ -33,6 +39,16 @@ def print_pose(mc):
     coords = mc.get_coords()
     print("\nAktuelle Winkel:", angles)
     print("Aktuelle Koordinaten:", coords)
+
+def open_gripper(mc):
+    print("Greifer oeffnen...")
+    mc.set_gripper_state(0, GRIPPER_SPEED, 1)
+    time.sleep(2)
+
+def close_gripper(mc):
+    print("Greifer schliessen...")
+    mc.set_gripper_state(1, GRIPPER_SPEED, 1)
+    time.sleep(2)
 
 def move_joint(mc, joint_index, delta):
     angles = mc.get_angles()
@@ -50,7 +66,7 @@ def move_joint(mc, joint_index, delta):
 
 def home(mc):
     print("Fahre Home...")
-    mc.send_angles([0, 0, 0, 0, 0, 0], SPEED)
+    mc.send_angles(HOME_ANGLES, SPEED)
     wait_until_done(mc)
     print_pose(mc)
 
@@ -70,6 +86,8 @@ Steuerung:
   6 / z  -> Gelenk 6 - / +
   p      -> Pose ausgeben
   h      -> Home
+  o      -> Greifer oeffnen
+  c      -> Greifer schliessen
   x      -> Beenden
 """)
 
@@ -104,6 +122,10 @@ Steuerung:
             print_pose(mc)
         elif cmd == "h":
             home(mc)
+        elif cmd == "o":
+            open_gripper(mc)
+        elif cmd == "c":
+            close_gripper(mc)
         elif cmd == "x":
             print("Beende Programm.")
             break
