@@ -46,18 +46,3 @@ und führt die Greifsequenz automatisch aus.
 | Roboterarm | MyCobot (pymycobot) |
 | Koordinaten-Transformation | Kamera → Arm (XYZ-Kalibrierung) |
 
----
-
-## Vorhandene Basis
-
-Das Projekt baut auf bestehenden Komponenten auf:
-- Navigation und Kartierung sind bereits implementiert
-- YOLOv8-Erkennung des Bausteins ist vorhanden
-- Grundlegende Greifsequenz des Arms ist definiert
-
-Neu entwickelt werden der übergeordnete Ablauf-Controller sowie die
-Suchdrehung, Zentrierung und das autonome Annähern.
-
----
-
-*Stand: Mai 2026*
