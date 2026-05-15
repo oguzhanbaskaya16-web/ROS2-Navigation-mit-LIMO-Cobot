@@ -20,10 +20,12 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'waypoint_navigator = limo_navigation.waypoint_navigator:main',
-            'pickplace_navigator = limo_navigation.pickplace_navigator:main',
-            'drive_2m_simple = limo_navigation.drive_2m_simple:main',
-            'drive_2m_pick = limo_navigation.drive_2m_pick:main',
+            'waypoint_navigator = limo_waypoints.waypoint_navigator:main',
+            'search_spin_node = limo_waypoints.search_spin_node:main',
+            'pickplace_navigator = limo_waypoints.pickplace_navigator:main',
+            'drive_2m_simple = limo_waypoints.drive_2m_simple:main',
+            'drive_2m_pick = limo_waypoints.drive_2m_pick:main',
+
             # hier koennen spaeter weitere nodes gespeichert werden...
             # Test
         ],
