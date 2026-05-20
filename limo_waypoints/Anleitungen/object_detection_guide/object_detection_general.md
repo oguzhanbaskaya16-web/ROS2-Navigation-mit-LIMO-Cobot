@@ -103,7 +103,7 @@ pip install labelImg
 👉 Programm starten (Beispiel Windows):
 
 ```bash id="8n3u4c"
-""d:\users\bku\benutzer\appdata(roaming)\python\python38\Scripts\labelImg.exe""
+& "D:\users\bku\benutzer\appdata(roaming)\python\python38\Scripts\labelImg.exe"
 ```
 
 ---
